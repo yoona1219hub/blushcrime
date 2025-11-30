@@ -72,6 +72,14 @@ canvas {
   opacity: 1;
 }
 
+#logo-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.05s linear, opacity 5s ease-in-out;
+  width: 100px;
+}
+
 .primary {
   flex: 2;
   display: flex;
