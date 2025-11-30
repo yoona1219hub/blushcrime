@@ -1,0 +1,336 @@
+$seashell: #edebe6;
+$garnet-red: #b70000;
+$neutral-grey: #b2b2b2;
+
+$padding: 2rem;
+
+$breakpoint-mobile: 768px;
+
+@font-face {
+    font-family: 'cmunti';
+    src: url('./font/cmunti.woff') format('woff');
+}
+
+@mixin for-mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+#myElement{
+    cursor: url('./asset/icon/cursor.svg') 0 0, default;
+}
+
+html{
+    background-color: $seashell;
+    color: $garnet-red;
+
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: 'cmunti', 'Garamond', 'Times New Roman', 'Georgia', serif;
+
+    @include for-mobile { 
+        font-size: 12px;
+    }
+}
+
+a{
+    color: $garnet-red;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover{
+    color: $garnet-red;
+    cursor: pointer;
+}
+
+a:after{
+    color: $garnet-red;
+}
+
+h1{
+    font-size: 1rem;
+    margin: 0;
+}
+
+p{
+    font-size: 0.75rem;
+}
+
+body{
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: $padding;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    gap: 2rem;
+
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out;
+
+    @include for-mobile { 
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+}
+
+
+canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            opacity: 100; 
+            display: block;
+            opacity: 1;
+        }
+
+
+//좌측       
+.primary{
+    flex: 2;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+
+}
+
+header{
+    width: 100%;
+
+    @include for-mobile { 
+        margin-bottom: 3rem;
+
+        width: calc(100vw - 2 * $padding);
+    }
+}
+
+main{
+    max-height: 80vh;
+
+    @include for-mobile { 
+        max-height: 200vh;
+    }
+}
+
+.content-title{
+    margin-bottom: -0.4rem;
+}
+
+.content-description{
+    margin-bottom: 1.5rem;
+}
+
+.image-content{
+    width: 60%;
+    min-width: 250px;
+
+    @include for-mobile { 
+        width: 100%;
+    }
+
+    .video-container{
+        width: 100%;
+        position: relative;
+
+        iframe, img{
+            width: 100%;
+            height: 100%;
+            min-height: 20vh;
+            object-fit: contain;
+        }
+
+        iframe{
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+    }
+
+    .media-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.5rem; /* 버튼 크기 */
+        height: 1.5rem;
+
+        font-size: 1rem;
+        font-family:'Garamond';
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+
+        // filter: drop-shadow(0 0 8px hsl(0, 0%, 100%));
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+    }
+
+    #media-nav-left {
+        left: 10px;
+    }
+
+    #media-nav-right {
+        right: 10px;
+    }
+
+    #custom-controls{
+        width: 100%;
+        height: 2rem;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        margin-top: 0.5rem;
+    }
+
+    .control-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: 'cmunti', 'Garamond', 'Times New Roman', 'Georgia', serif;
+        color: $garnet-red;
+
+        width: 20%;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .progress-area {
+        width: 52%;
+        display: flex;
+        align-items: center;
+        margin: 0 10px;
+    }
+
+    #progress-track {
+        position: relative; // fill div의 기준점
+        width: 100%;
+        height: 2px; // 트랙 높이
+        background-color: $neutral-grey; // 전체 트랙 배경색 (남은 부분)
+        cursor: pointer;
+    }
+
+    #progress-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0%; // JavaScript가 제어할 초기값
+        background-color: $garnet-red; // 재생된 부분의 색상
+    }
+}
+
+.video-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: $seashell;
+}
+.video-container.fullscreen video {
+    width: 100%;
+    height: 100%;
+    background-color: $seashell;
+}
+
+
+//우측
+.secondary{
+    flex: 4;
+    position: relative;
+}
+
+.toc{
+    width: 20rem;
+    height: 20rem;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    span {
+        position: absolute;
+        cursor: pointer;
+        z-index: 1002;
+        transition: none; 
+
+
+        .number-description{
+            opacity: 0;
+
+            position: absolute;
+            top: 0.07rem;
+            left: 1.5rem;
+            color: $neutral-grey;
+
+            width: 25rem;
+
+                @include for-mobile { 
+                    font-size: 10px;
+
+                    display: inline-block;
+                    max-width: calc(100% - 3rem);
+                    white-space: normal;
+                }
+
+        }
+    }
+    span:nth-child(n+10){
+        .number-description{
+            left: 2rem;
+        }
+    }
+    span:nth-child(14){
+        .number-description{
+            @include for-mobile { 
+               margin-bottom: 3rem;
+            }
+        }
+    }
+    span:last-child{
+            @include for-mobile { 
+                display: none;
+
+            }
+    }
+    span:hover .number-description {
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+}
+
+
+.about-content{
+    display: none;
+}
+
+menu{
+    position: fixed;
+    bottom: $padding;
+    right: $padding;
+
+    margin: 0;
+
+    display: flex;
+
+    span:last-child{
+        margin-left: 2rem;
+    }
+}
