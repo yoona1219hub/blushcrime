@@ -1,18 +1,15 @@
 let carpetImg;
 let carpetReverseImg;
 let brushImg;
-let logoImg;
 let pg;
 let maskedCarpetPatch;
 let isCanvasReady = false;
 let canvasElement;
-const MOBILE_BREAKPOINT = 768;
 
 function preload() {
     carpetImg = loadImage('./asset/carpet.jpeg');
     carpetReverseImg = loadImage('./asset/carpet-reverse.jpeg');
     brushImg = loadImage('./asset/icon/brush.png');
-    logoImg = loadImage('./asset/icon/cursor.svg');
 }
 
 function setup() {
@@ -23,7 +20,7 @@ function setup() {
     canvasElement = canvas.elt;
     canvas.parent('carpet');
 
-    canvasElement.style.transition = 'opacity 1s ease-in-out';
+    canvasElement.style.transition = 'opacity 5s ease-in-out';
 
     pg = createGraphics(width, height);
     pg.image(carpetReverseImg, 0, 0, width, height);
@@ -32,26 +29,12 @@ function setup() {
     brushImg.resize(brushImg.width*BRUSH_SCALE, brushImg.height*BRUSH_SCALE);
 
     maskedCarpetPatch = createImage(brushImg.width, brushImg.height);
-
-    let logoScaleWidth;
-    if (windowWidth <= MOBILE_BREAKPOINT) {
-        logoScaleWidth = 100; 
-    } else {
-        logoScaleWidth = logoImg.width * 0.0003 * windowWidth;
-    }
-
-    const aspectRatio = logoImg.height / logoImg.width;
-    const newHeight = logoScaleWidth * aspectRatio;
-
-    logoImg.resize(logoScaleWidth, newHeight);
-
-
 }
 
 function draw() {
     if (!isCanvasReady) {
         document.body.style.opacity = 1;
-        setTimeout(hideCanvas, 3000);
+        setTimeout(hideCanvas, 5000);
         isCanvasReady = true;
     }
 
@@ -97,43 +80,62 @@ function draw() {
             
         }
     }
-
-    image(logoImg, mouseX + logoImg.width/9, mouseY + logoImg.width/9);
    
 }
 
 function hideCanvas() {
     canvasElement.style.opacity = 0;
     
-    setTimeout(() => {
-        canvasElement.style.zIndex = -1;
-    }, 5000);
+    const logoCursor = document.getElementById('logo-cursor');
+    if (logoCursor) {
+        logoCursor.style.opacity = 0; 
+
+        setTimeout(() => {
+            canvasElement.style.zIndex = -1;
+            logoCursor.style.zIndex = -1; 
+        }, 5000);
+    }
 }
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
     pg = createGraphics(width, height);
     pg.image(carpetImg, 0, 0, width, height);
-
-    const logoScaleWidth = (windowWidth <= MOBILE_BREAKPOINT) ? 100 : (logoImg.width / 0.0003 / windowWidth) * 0.0003 * windowWidth;
-
-    let tempLogoScaleWidth;
-    const ORIGINAL_SCALE_FACTOR = 0.0003;
-
-    if (windowWidth <= MOBILE_BREAKPOINT) {
-        tempLogoScaleWidth = 100; 
-    } else {
-        tempLogoScaleWidth = logoImg.width * (windowWidth / width); 
-        tempLogoScaleWidth = windowWidth * ORIGINAL_SCALE_FACTOR;
-    }
-    const resizeLogo = (img, currentWindowWidth) => {
-        let desiredWidth;
-        if (currentWindowWidth <= MOBILE_BREAKPOINT) {
-            desiredWidth = 100;
-        } else {
-            desiredWidth = currentWindowWidth * ORIGINAL_SCALE_FACTOR;
-        }
-        img.resize(desiredWidth, 0);
-    }
-    resizeLogo(logoImg, windowWidth);
 }
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const logoCursor = document.getElementById('logo-cursor');
+
+    const MOBILE_BREAKPOINT = 768; 
+    const ORIGINAL_SCALE_FACTOR = 0.0003; 
+
+    function setLogoSize(windowWidth) {
+        if (!logoCursor) return;
+        let desiredWidth;
+        logoCursor.style.width = `${desiredWidth}px`;
+    }
+
+    document.addEventListener('mousemove', (event) => {
+        if (!logoCursor) return;
+        const x = event.clientX;
+        const y = event.clientY;
+
+        const offsetX = logoCursor.offsetWidth / 9;
+        const offsetY = logoCursor.offsetWidth / 9;
+
+        logoCursor.style.transform = `translate(${x + offsetX}px, ${y + offsetY}px)`;
+    });
+
+    if (logoCursor) {
+        setLogoSize(window.innerWidth);
+    }
+
+    window.addEventListener('resize', () => {
+        if (logoCursor) {
+            setLogoSize(window.innerWidth);
+        }
+    });
+});
