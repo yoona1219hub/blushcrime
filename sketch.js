@@ -9,8 +9,8 @@ let canvasElement;
 const MOBILE_BREAKPOINT = 768;
 
 function preload() {
-    carpetImg = loadImage('./asset/carpet.jpg');
-    carpetReverseImg = loadImage('./asset/carpet-reverse.jpg');
+    carpetImg = loadImage('./asset/carpet.jpeg');
+    carpetReverseImg = loadImage('./asset/carpet-reverse.jpeg');
     brushImg = loadImage('./asset/icon/brush.png');
     logoImg = loadImage('./asset/icon/cursor.svg');
 }
