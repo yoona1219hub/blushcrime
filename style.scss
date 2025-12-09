@@ -1,5 +1,5 @@
-$seashell: #edebe6;
-$garnet-red: #b70000;
+$seashell: #f3f5f5;
+$garnet-red: #c9002b;
 $neutral-grey: #b2b2b2;
 
 $padding: 2rem;
@@ -10,6 +10,12 @@ $breakpoint-mobile: 768px;
     font-family: 'cmunti';
     src: url('./font/cmunti.woff') format('woff');
 }
+@font-face {
+    font-family: 'cmunrm';
+    src: url('./font/cmunrm.woff') format('woff');
+}
+
+// @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
 
 @mixin for-mobile {
   @media (max-width: $breakpoint-mobile) {
@@ -27,7 +33,7 @@ html{
 
     font-size: 14px;
     line-height: 1.5;
-    font-family: 'cmunti', 'Garamond', 'Times New Roman', 'Georgia', serif;
+    font-family: 'cmunrm', 'Garamond', 'Times New Roman', 'Georgia', serif;
 
     @include for-mobile { 
         font-size: 12px;
@@ -81,13 +87,13 @@ body{
 
 
 canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1001;
-            opacity: 100; 
-            display: block;
-            opacity: 1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1001;
+        opacity: 100; 
+        display: block;
+        opacity: 1;
         }
 
 #logo-cursor{
@@ -124,6 +130,7 @@ main{
 
     @include for-mobile { 
         max-height: 200vh;
+        margin-top: 4rem;
     }
 }
 
@@ -136,7 +143,7 @@ main{
 }
 
 .image-content{
-    width: 60%;
+    width: 100%;
     min-width: 250px;
 
     @include for-mobile { 
@@ -145,7 +152,9 @@ main{
 
     .video-container{
         width: 100%;
+        // height: 100vh;
         position: relative;
+
 
         iframe, img{
             width: 100%;
@@ -205,7 +214,7 @@ main{
         background: none;
         border: none;
         cursor: pointer;
-        font-family: 'cmunti', 'Garamond', 'Times New Roman', 'Georgia', serif;
+        font-family: 'cmurm', 'Garamond', 'Times New Roman', 'Georgia', serif;
         color: $garnet-red;
 
         width: 20%;
@@ -271,6 +280,14 @@ main{
     left: 50%;
     transform: translate(-50%, -50%);
 
+    @include for-mobile { 
+        width: 15rem;
+        height: 15rem;
+
+        font-size: 0.9rem;
+
+    }
+
     span {
         position: absolute;
         cursor: pointer;
@@ -289,11 +306,12 @@ main{
             width: 25rem;
 
                 @include for-mobile { 
-                    font-size: 10px;
+                    font-size: 0.625rem;
 
                     display: inline-block;
                     max-width: calc(100% - 3rem);
                     white-space: normal;
+
                 }
 
         }
@@ -336,8 +354,14 @@ menu{
     margin: 0;
 
     display: flex;
+    font-size: 1rem;
 
     span:last-child{
         margin-left: 2rem;
+    }
+
+    @include for-mobile { 
+        z-index: 999;
+
     }
 }

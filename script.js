@@ -125,16 +125,16 @@ if (TOC_CONTAINER) {
             const viewportWidth = window.innerWidth;
         
             if (viewportWidth <= BREAKPOINT_MOBILE) {
-                if (!isIndexMode) {
-                    toggleIndexMode(); 
-                }
+                // if (!isIndexMode) {
+                //     toggleIndexMode(); 
+                // }
                 if (indexSpan) {
                     indexSpan.style.display = 'none';
                 }
             } else {
-                if (isIndexMode) {
-                    toggleIndexMode();
-                }
+                // if (isIndexMode) {
+                //     toggleIndexMode();
+                // }
                 if (indexSpan) {
                     indexSpan.style.display = 'flex';
                 }
@@ -503,3 +503,33 @@ document.addEventListener('DOMContentLoaded', () => {
         aboutSpan.addEventListener('click', toggleAboutPage);
     }
 });
+
+
+const PRIMARY_CONTAINER = document.querySelector('.primary');
+const SECONDARY_CONTAINER = document.querySelector('.secondary');
+const HEADER_ELEMENT = document.querySelector('header');
+const BREAKPOINT = 768;
+
+function moveSecondaryOnMobile() {
+    const viewportWidth = window.innerWidth;
+    
+    if (viewportWidth <= BREAKPOINT) {
+        if (PRIMARY_CONTAINER && SECONDARY_CONTAINER && HEADER_ELEMENT) {
+            if (SECONDARY_CONTAINER.parentElement !== PRIMARY_CONTAINER || SECONDARY_CONTAINER.previousElementSibling !== HEADER_ELEMENT) {
+                HEADER_ELEMENT.after(SECONDARY_CONTAINER);
+                SECONDARY_CONTAINER.classList.add('is-mobile-moved');
+            }
+        }
+    } else {
+        if (SECONDARY_CONTAINER && SECONDARY_CONTAINER.classList.contains('is-mobile-moved')) {
+            document.body.appendChild(SECONDARY_CONTAINER);
+            SECONDARY_CONTAINER.classList.remove('is-mobile-moved');
+        }
+    }
+}
+
+// 초기 로드 시 실행
+moveSecondaryOnMobile();
+// 창 크기 변경 시 실행
+window.addEventListener('resize', moveSecondaryOnMobile);
+

@@ -164,16 +164,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (videoWidth && videoHeight) {
                 const containerWidth = videoContainer.offsetWidth;
                 let newHeight;
+                let heightUnit = 'px';
 
                 if (videoHeight > videoWidth) {
-                    newHeight = containerWidth * (videoHeight / videoWidth); 
+                    newHeight = '50vh';
+                    heightUnit = '';
                 } else {
-                    newHeight = containerWidth * (videoHeight / videoWidth); 
+                    newHeight = containerWidth * (videoHeight / videoWidth);
+                    heightUnit = 'px'; 
                 }
                 
                 const activeIframe = videoContainer.querySelector('iframe');
                 if (activeIframe) {
-                    activeIframe.style.height = `${newHeight}px`; 
+                    activeIframe.style.height = `${newHeight}${heightUnit}`; 
                 }
 
             } else {
